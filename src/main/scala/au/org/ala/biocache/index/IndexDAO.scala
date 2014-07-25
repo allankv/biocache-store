@@ -526,18 +526,18 @@ trait IndexDAO {
       case e: Exception => e.printStackTrace; throw e
     }
   }
-}
 
-val monitoredList = scala.io.Source.fromFile("/data/biocache/monitored-list.csv").getLines
-
-def getMonitoredStatus(scientificName:String) : String = {
-  
-  
-  if(monitoredList.contains(scientificName)){
-    "Especie monitorada"
-  } else {
-    "Especie nao monitorada"
-  }
+	val monitoredList = scala.io.Source.fromFile("/data/biocache/monitored-list.csv").getLines
+	
+	def getMonitoredStatus(scientificName:String) : String = {
+	  
+	  
+	  if(monitoredList.contains(scientificName)){
+	    "Especie monitorada"
+	  } else {
+	    "Especie nao monitorada"
+	  }
+	}
 }
 /**
  * An class for handling a generic/common index fields
