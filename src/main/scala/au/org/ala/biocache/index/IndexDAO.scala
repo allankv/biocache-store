@@ -531,17 +531,17 @@ trait IndexDAO {
   	val redList = scala.io.Source.fromFile("/data/biocache/red-list.csv").getLines	
 	def getRedList(scientificName:String) : String = {	  
 	  if(redList.contains(scientificName)){
-	    "Espécie ameaçada"
+	    "Especie ameacada"
 	  } else {
-	    "Espécie não ameaçada"
+	    "Especie nao ameacada"
 	  }	  
 	}
 	val monitoredList = scala.io.Source.fromFile("/data/biocache/monitored-list.csv").getLines	
 	def getMonitoredList(scientificName:String, family:String) : String = {	  
 	  if(monitoredList.contains(scientificName) || family.trim().toUpperCase().equals("Nymphalidae".toUpperCase())){
-	    "Espécie monitorada"
+	    "Especie monitorada"
 	  } else {
-	    "Espécie não monitorada"
+	    "Especie nao monitorada"
 	  }	  
 	}
 }
