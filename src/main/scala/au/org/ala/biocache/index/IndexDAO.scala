@@ -152,7 +152,7 @@ trait IndexDAO {
     "identified_by", "identified_date", "sensitive_longitude", "sensitive_latitude", "pest_flag_s", "collectors", "duplicate_status", "duplicate_record",
     "duplicate_type", "sensitive_coordinate_uncertainty", "distance_outside_expert_range", "elevation_d", "min_elevation_d", "max_elevation_d",
     "depth_d", "min_depth_d", "max_depth_d", "name_parse_type_s","occurrence_status_s", "occurrence_details", "photographer_s", "rights",
-    "raw_geo_validation_status_s", "raw_occurrence_status_s", "raw_locality","raw_latitude","raw_longitude","raw_datum","raw_sex", "sensitive_locality", "monitored_s") // ++ elFields ++ clFields
+    "raw_geo_validation_status_s", "raw_occurrence_status_s", "raw_locality","raw_latitude","raw_longitude","raw_datum","raw_sex", "sensitive_locality", "monitoredList_s", "redList_s", "samplingProtocol_s") // ++ elFields ++ clFields
 
   /**
    * Constructs a scientific name.
@@ -514,7 +514,9 @@ trait IndexDAO {
           map.getOrElse("rights",""), map.getOrElse("georeferenceVerificationStatus",""), map.getOrElse("occurrenceStatus", ""),
           map.getOrElse("locality",""),map.getOrElse("decimalLatitude",""), map.getOrElse("decimalLongitude",""), map.getOrElse("geodeticDatum",""),
           map.getOrElse("sex",""), sensitiveMap.getOrElse("locality", ""),
-          getMonitoredStatus(getRawScientificName(map))
+          getMonitoredList(getRawScientificName(map), family),
+          getRedList(getRawScientificName(map)),
+          map.getOrElse("samplingProtocol_s","")
         ) //++ elFields.map(field => elmap.getOrElse(field,"")) ++ clFields.map(field=> clmap.getOrElse(field,"")
         //)
       }
@@ -526,17 +528,21 @@ trait IndexDAO {
       case e: Exception => e.printStackTrace; throw e
     }
   }
-
-	val monitoredList = scala.io.Source.fromFile("/data/biocache/monitored-list.csv").getLines
-	
-	def getMonitoredStatus(scientificName:String) : String = {
-	  
-	  
-	  if(monitoredList.contains(scientificName)){
-	    "Especie monitorada"
+  	val redList = scala.io.Source.fromFile("/data/biocache/red-list.csv").getLines	
+	def getRedList(scientificName:String) : String = {	  
+	  if(redList.contains(scientificName)){
+	    "Espécie ameaçada"
 	  } else {
-	    "Especie nao monitorada"
-	  }
+	    "Espécie não ameaçada"
+	  }	  
+	}
+	val monitoredList = scala.io.Source.fromFile("/data/biocache/monitored-list.csv").getLines	
+	def getMonitoredList(scientificName:String, family:String) : String = {	  
+	  if(monitoredList.contains(scientificName) || family.trim().toUpperCase().equals("Nymphalidae".toUpperCase())){
+	    "Espécie monitorada"
+	  } else {
+	    "Espécie não monitorada"
+	  }	  
 	}
 }
 /**
