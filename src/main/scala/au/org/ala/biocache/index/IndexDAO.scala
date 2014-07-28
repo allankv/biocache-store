@@ -528,7 +528,7 @@ trait IndexDAO {
       case e: Exception => e.printStackTrace; throw e
     }
   }
-  	val redList = scala.io.Source.fromFile("/data/biocache/red-list.csv").getLines	
+  	val redList = scala.io.Source.fromFile("/data/biocache/red-list.csv").getLines.toList	
 	def getRedList(scientificName:String) : String = {	  
 	  if(redList.contains(scientificName)){
 	    "Especie ameacada"
@@ -536,7 +536,7 @@ trait IndexDAO {
 	    "Especie nao ameacada"
 	  }	  
 	}
-	val monitoredList = scala.io.Source.fromFile("/data/biocache/monitored-list.csv").getLines	
+	val monitoredList = scala.io.Source.fromFile("/data/biocache/monitored-list.csv").getLines.toList	
 	def getMonitoredList(scientificName:String, family:String) : String = {	  
 	  if(monitoredList.contains(scientificName) || family.trim().toUpperCase().equals("Nymphalidae".toUpperCase())){
 	    "Especie monitorada"
