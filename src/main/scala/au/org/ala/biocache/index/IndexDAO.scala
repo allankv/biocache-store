@@ -514,7 +514,7 @@ trait IndexDAO {
           map.getOrElse("rights",""), map.getOrElse("georeferenceVerificationStatus",""), map.getOrElse("occurrenceStatus", ""),
           map.getOrElse("locality",""),map.getOrElse("decimalLatitude",""), map.getOrElse("decimalLongitude",""), map.getOrElse("geodeticDatum",""),
           map.getOrElse("sex",""), sensitiveMap.getOrElse("locality", ""),
-          getMonitoredList(getRawScientificName(map), sciName, family),
+          getMonitoredList(getRawScientificName(map), sciName),
           getRedList(getRawScientificName(map), sciName),
           map.getOrElse("samplingProtocol_s","")
         ) //++ elFields.map(field => elmap.getOrElse(field,"")) ++ clFields.map(field=> clmap.getOrElse(field,"")
@@ -537,8 +537,8 @@ trait IndexDAO {
 	  }	  
 	}
 	val monitoredList = scala.io.Source.fromFile("/data/biocache/monitored-list.csv").getLines.toList	
-	def getMonitoredList(rawScientificName:String, scientificName:String, family:String) : String = {	  
-	  if(monitoredList.contains(rawScientificName) || monitoredList.contains(scientificName)){
+	def getMonitoredList(rawScientificName:String, scientificName:String) : String = {	  
+	  if(monitoredList.contains(rawScientificName)||monitoredList.contains(scientificName)){
 	    "Especie monitorada"
 	  } else {
 	    "Especie nao monitorada"
