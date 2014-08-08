@@ -538,7 +538,7 @@ trait IndexDAO {
 	}
 	val monitoredList = scala.io.Source.fromFile("/data/biocache/monitored-list.csv").getLines.toList	
 	def getMonitoredList(rawScientificName:String, scientificName:String, family:String) : String = {	  
-	  if(monitoredList.contains(rawScientificName) || monitoredList.contains(scientificName) || family.trim().toUpperCase().equals("Nymphalidae".toUpperCase())){
+	  if(monitoredList.contains(rawScientificName) || monitoredList.contains(scientificName)||family.trim().toUpperCase()=="NYMPHALIDAE"){
 	    "Especie monitorada"
 	  } else {
 	    "Especie nao monitorada"
